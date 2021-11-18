@@ -1,21 +1,24 @@
-import React from 'react';
-import '../sldkf.css';
-import Board from './Board';
-import { useDispatch, useSelector } from 'react-redux';
-import IAppState from '../redux/types/IAppState';
-import { _boardAddTokenActionCreator } from '../redux/actions/boardActions';
-import Occupant from '../redux/types/EOccupant';
+import React from "react";
+import "../sldkf.css";
+import Board from "./Board";
+import { useSelector } from "react-redux";
+import IAppState from "../redux/types/IAppState";
+import ResetButton from "./ResetButton";
+import BackForButton from "./BackwardForwardButton";
 
 function App() {
-  const dispatch = useDispatch();
   let board = useSelector((state: IAppState) => state.board);
-  function dispatchAddToken() {
-    dispatch(_boardAddTokenActionCreator({ column: 0, playerID: Occupant.Player1 }));
-  }
 
   return (
-    <div className='App' onClick={() => dispatchAddToken()}>
-      <Board board={board} />
+    <div className='container'>
+      <div className='App'>
+        <header>
+          <h1 className='text-center'>ConnectFour</h1>
+        </header>
+        <ResetButton />
+        <BackForButton />
+        <Board board={board} />
+      </div>
     </div>
   );
 }

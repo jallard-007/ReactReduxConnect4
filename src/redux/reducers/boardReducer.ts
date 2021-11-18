@@ -1,8 +1,12 @@
-import BoardActions, { BOARD_ADD_TOKEN, BOARD_REMOVE_TOKEN } from '../actions/boardActions';
-import Occupant from '../types/EOccupant';
-import IBoard from '../types/IBoard';
-import IColumn from '../types/IColumn';
-import ISlot from '../types/ISlot';
+import BoardActions, {
+  BOARD_ADD_TOKEN,
+  BOARD_CLEAR,
+  BOARD_REMOVE_TOKEN
+} from "../actions/boardActions";
+import Occupant from "../types/EOccupant";
+import IBoard from "../types/IBoard";
+import IColumn from "../types/IColumn";
+import ISlot from "../types/ISlot";
 
 const emptySlot: ISlot = {
   occupant: Occupant.Empty
@@ -12,26 +16,50 @@ const emptyColumn: IColumn = {
   slotsAvailable: 6
 };
 const initialState: IBoard = {
-  columns: [emptyColumn, emptyColumn, emptyColumn, emptyColumn, emptyColumn, emptyColumn, emptyColumn]
+  columns: [
+    emptyColumn,
+    emptyColumn,
+    emptyColumn,
+    emptyColumn,
+    emptyColumn,
+    emptyColumn,
+    emptyColumn
+  ]
 };
 
-export default function boardReducer(state = initialState, action: BoardActions): IBoard {
-  const newBoard = JSON.parse(JSON.stringify(state));
+let columnNum: number;
+let slotsAvailable: number;
 
-  const columnNum = 0;
-  const slotsAvailable = newBoard.columns[columnNum].slotsAvailable;
-  console.log(slotsAvailable);
-  if (slotsAvailable < 1) {
-    return state;
-  }
+export default function boardReducer(
+  state = initialState,
+  action: BoardActions
+) {
+  const newBoard = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case BOARD_ADD_TOKEN:
-      newBoard.columns[columnNum].slots[slotsAvailable - 1].occupant = action.payload.playerID;
+      columnNum = action.payload.columnNum;
+      slotsAvailable = newBoard.columns[columnNum].slotsAvailable;
+      if (slotsAvailable < 1) {
+        return state;
+      }
+      newBoard.columns[columnNum].slots[slotsAvailable - 1].occupant =
+        action.payload.playerID;
       newBoard.columns[columnNum].slotsAvailable = slotsAvailable - 1;
       return newBoard;
     case BOARD_REMOVE_TOKEN:
-      newBoard.columns[columnNum].slots[slotsAvailable - 1].occupant = Occupant.Empty;
+      columnNum = action.payload.columnNum;
+      console.log(newBoard.columns[columnNum]);
+      slotsAvailable = newBoard.columns[columnNum].slotsAvailable;
+      if (slotsAvailable > 5) {
+        return state;
+      }
+      newBoard.columns[columnNum].slots[slotsAvailable].occupant =
+        Occupant.Empty;
+      newBoard.columns[columnNum].slotsAvailable = slotsAvailable + 1;
       return newBoard;
+    case BOARD_CLEAR:
+      const clearBoard = initialState;
+      return clearBoard;
     default:
       return state;
   }

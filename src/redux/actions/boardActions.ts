@@ -1,39 +1,56 @@
-import Occupant from '../types/EOccupant';
+import Occupant from "../types/EOccupant";
 
-export const BOARD_ADD_TOKEN = 'ADD_TOKEN';
+export const BOARD_ADD_TOKEN = "ADD_TOKEN";
 export interface IBoardAddTokenAction {
   type: typeof BOARD_ADD_TOKEN;
   payload: IBoardAddTokenActionPayload;
 }
 interface IBoardAddTokenActionPayload {
-  column: number;
+  columnNum: number;
   playerID: Occupant;
 }
-export function _boardAddTokenActionCreator(payload: IBoardAddTokenActionPayload): IBoardAddTokenAction {
+export function _boardAddTokenActionCreator(
+  payload: IBoardAddTokenActionPayload
+): IBoardAddTokenAction {
   return {
     type: BOARD_ADD_TOKEN,
     payload
   };
 }
 
-export const BOARD_REMOVE_TOKEN = 'REMOVE_TOKEN';
+export const BOARD_REMOVE_TOKEN = "REMOVE_TOKEN";
 export interface IBoardRemoveTokenAction {
   type: typeof BOARD_REMOVE_TOKEN;
   payload: IBoardRemoveTokenActionPayload;
 }
 interface IBoardRemoveTokenActionPayload {
-  column: number;
+  columnNum: number;
 }
-export function _boardRemoveTokenActionCreator(payload: IBoardRemoveTokenActionPayload): IBoardRemoveTokenAction {
+export function _boardRemoveTokenActionCreator(
+  payload: IBoardRemoveTokenActionPayload
+): IBoardRemoveTokenAction {
   return {
     type: BOARD_REMOVE_TOKEN,
     payload
   };
 }
 
-type BoardActions = IBoardAddTokenAction | IBoardRemoveTokenAction;
+export const BOARD_CLEAR = "CLEAR";
+export interface IBoardClearAction {
+  type: typeof BOARD_CLEAR;
+}
+export function _boardClearActionCreator(): IBoardClearAction {
+  return {
+    type: BOARD_CLEAR
+  };
+}
 
-export const CHANGE_TURN = 'CHANGE_TURN';
+type BoardActions =
+  | IBoardAddTokenAction
+  | IBoardRemoveTokenAction
+  | IBoardClearAction;
+
+export const CHANGE_TURN = "CHANGE_TURN";
 export interface IChangeTurnAction {
   type: typeof CHANGE_TURN;
 }
