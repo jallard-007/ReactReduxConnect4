@@ -1,10 +1,10 @@
-import React from "react";
-import "../sldkf.css";
-import Board from "./Board";
-import { useSelector } from "react-redux";
-import IAppState from "../redux/types/IAppState";
-import ResetButton from "./ResetButton";
-import BackForButton from "./BackwardForwardButton";
+import React from 'react';
+import '../sldkf.css';
+import Board from './Board';
+import { useSelector } from 'react-redux';
+import IAppState from '../redux/types/IAppState';
+import ResetButton from './ResetButton';
+import BackForButton from './BackwardForwardButton';
 
 function App() {
   let board = useSelector((state: IAppState) => state.board);

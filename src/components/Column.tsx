@@ -1,9 +1,9 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { _boardAddTokenActionCreator } from "../redux/actions/boardActions";
-import Occupant from "../redux/types/EOccupant";
-import { SetGameHistory } from "../StoreGameMoves";
-import Coin from "./Coin";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { _boardAddTokenActionCreator } from '../redux/actions/boardActions';
+import Occupant from '../redux/types/EOccupant';
+import { SetGameHistory } from '../StoreGameMoves';
+import Coin from './Coin';
 
 interface IProps {
   column: any;

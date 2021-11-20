@@ -1,6 +1,6 @@
-import Occupant from "../types/EOccupant";
+import Occupant from '../types/EOccupant';
 
-export const BOARD_ADD_TOKEN = "ADD_TOKEN";
+export const BOARD_ADD_TOKEN = 'ADD_TOKEN';
 export interface IBoardAddTokenAction {
   type: typeof BOARD_ADD_TOKEN;
   payload: IBoardAddTokenActionPayload;
@@ -18,7 +18,7 @@ export function _boardAddTokenActionCreator(
   };
 }
 
-export const BOARD_REMOVE_TOKEN = "REMOVE_TOKEN";
+export const BOARD_REMOVE_TOKEN = 'REMOVE_TOKEN';
 export interface IBoardRemoveTokenAction {
   type: typeof BOARD_REMOVE_TOKEN;
   payload: IBoardRemoveTokenActionPayload;
@@ -35,7 +35,7 @@ export function _boardRemoveTokenActionCreator(
   };
 }
 
-export const BOARD_CLEAR = "CLEAR";
+export const BOARD_CLEAR = 'CLEAR';
 export interface IBoardClearAction {
   type: typeof BOARD_CLEAR;
 }
@@ -50,7 +50,7 @@ type BoardActions =
   | IBoardRemoveTokenAction
   | IBoardClearAction;
 
-export const CHANGE_TURN = "CHANGE_TURN";
+export const CHANGE_TURN = 'CHANGE_TURN';
 export interface IChangeTurnAction {
   type: typeof CHANGE_TURN;
 }

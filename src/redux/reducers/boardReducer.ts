@@ -2,11 +2,11 @@ import BoardActions, {
   BOARD_ADD_TOKEN,
   BOARD_CLEAR,
   BOARD_REMOVE_TOKEN
-} from "../actions/boardActions";
-import Occupant from "../types/EOccupant";
-import IBoard from "../types/IBoard";
-import IColumn from "../types/IColumn";
-import ISlot from "../types/ISlot";
+} from '../actions/boardActions';
+import Occupant from '../types/EOccupant';
+import IBoard from '../types/IBoard';
+import IColumn from '../types/IColumn';
+import ISlot from '../types/ISlot';
 
 const emptySlot: ISlot = {
   occupant: Occupant.Empty

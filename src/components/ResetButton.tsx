@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
-import { _boardClearActionCreator } from "../redux/actions/boardActions";
-import { NewGameMoves } from "../StoreGameMoves";
+import { useDispatch } from 'react-redux';
+import { _boardClearActionCreator } from '../redux/actions/boardActions';
+import { NewGameMoves } from '../StoreGameMoves';
 
 export default function ResetButton() {
   const dispatch = useDispatch();
