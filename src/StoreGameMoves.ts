@@ -1,17 +1,22 @@
-let gameHistory = [[]];
-let gameHistoryRemoved = [[]];
+import { IBoardAddTokenActionPayload } from './redux/actions/boardActions';
+
+let gameHistory: IBoardAddTokenActionPayload[] = [];
+let gameHistoryRemoved: IBoardAddTokenActionPayload[] = [];
 let gameHistoryLength = 0;
 let gameHistoryRemovedLength = 0;
 export function GetGameHistoryLength() {
   return gameHistoryLength;
 }
-export function SetGameHistory(move: any, branch: boolean) {
+export function SetGameHistory(move: IBoardAddTokenActionPayload, branch: boolean) {
   if (branch) {
-    gameHistoryRemoved = [[]];
+    gameHistoryRemoved = [];
     gameHistoryRemovedLength = 0;
   }
-  gameHistory.push(move);
-  gameHistoryLength++;
+  console.log(move);
+  let thisMove = {} as IBoardAddTokenActionPayload;
+  thisMove.columnNum = move.columnNum;
+  thisMove.playerID = move.playerID;
+  gameHistoryLength = gameHistory.push(thisMove);
 }
 export function GetGameHistory() {
   let move: any;
@@ -37,8 +42,8 @@ export function GetRemovedHistory() {
 }
 
 export function NewGameMoves() {
-  gameHistory = [[]];
-  gameHistoryRemoved = [[]];
+  gameHistory = [];
+  gameHistoryRemoved = [];
   gameHistoryLength = 0;
   gameHistoryRemovedLength = 0;
 }

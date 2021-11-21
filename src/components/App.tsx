@@ -1,14 +1,10 @@
 import React from 'react';
-import '../sldkf.css';
+import '../styles.css';
 import Board from './Board';
-import { useSelector } from 'react-redux';
-import IAppState from '../redux/types/IAppState';
 import ResetButton from './ResetButton';
 import BackForButton from './BackwardForwardButton';
 
 function App() {
-  let board = useSelector((state: IAppState) => state.board);
-
   return (
     <div className='container'>
       <div className='App'>
@@ -17,7 +13,7 @@ function App() {
         </header>
         <ResetButton />
         <BackForButton />
-        <Board board={board} />
+        <Board />
       </div>
     </div>
   );

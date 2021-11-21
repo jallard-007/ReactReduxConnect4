@@ -10,4 +10,6 @@ const reducers = combineReducers({
   turn: turnReducer
 });
 
-export default createStore(reducers, composeWithDevTools(applyMiddleware(thunk, logger)));
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk, logger)));
+
+export default store;

@@ -1,0 +1,55 @@
+* {
+  background-color: rgb(34, 34, 34);
+}
+:root {
+  --tokenSize: min(84px, 10vw, 10vh);
+}
+h1 {
+  color: aliceblue;
+}
+#gameBoard {
+  border-radius: 10px;
+  margin: auto;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+}
+.column {
+  position: relative;
+  width: var(--tokenSize);
+  height: calc(var(--tokenSize) * 7);
+}
+.column:hover {
+  cursor: pointer;
+}
+
+.slot {
+  position: absolute;
+  right: 0px;
+  border: 2px solid blue;
+  width: var(--tokenSize);
+  height: var(--tokenSize);
+  border-radius: 50%;
+  z-index: 10;
+  background-color: transparent;
+}
+
+.token {
+  position: absolute;
+  right: 0px;
+  width: var(--tokenSize);
+  height: var(--tokenSize);
+  border-radius: 50%;
+}
+
+.tokenPlayer1 {
+  position: absolute;
+  background-color: yellow;
+  z-index: 5;
+}
+
+.tokenPlayer2 {
+  position: absolute;
+  background-color: red;
+  z-index: 5;
+}

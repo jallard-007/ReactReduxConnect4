@@ -5,13 +5,11 @@ export interface IBoardAddTokenAction {
   type: typeof BOARD_ADD_TOKEN;
   payload: IBoardAddTokenActionPayload;
 }
-interface IBoardAddTokenActionPayload {
+export interface IBoardAddTokenActionPayload {
   columnNum: number;
   playerID: Occupant;
 }
-export function _boardAddTokenActionCreator(
-  payload: IBoardAddTokenActionPayload
-): IBoardAddTokenAction {
+export function _boardAddTokenActionCreator(payload: IBoardAddTokenActionPayload): IBoardAddTokenAction {
   return {
     type: BOARD_ADD_TOKEN,
     payload
@@ -26,9 +24,7 @@ export interface IBoardRemoveTokenAction {
 interface IBoardRemoveTokenActionPayload {
   columnNum: number;
 }
-export function _boardRemoveTokenActionCreator(
-  payload: IBoardRemoveTokenActionPayload
-): IBoardRemoveTokenAction {
+export function _boardRemoveTokenActionCreator(payload: IBoardRemoveTokenActionPayload): IBoardRemoveTokenAction {
   return {
     type: BOARD_REMOVE_TOKEN,
     payload
@@ -45,10 +41,7 @@ export function _boardClearActionCreator(): IBoardClearAction {
   };
 }
 
-type BoardActions =
-  | IBoardAddTokenAction
-  | IBoardRemoveTokenAction
-  | IBoardClearAction;
+type BoardActions = IBoardAddTokenAction | IBoardRemoveTokenAction | IBoardClearAction;
 
 export const CHANGE_TURN = 'CHANGE_TURN';
 export interface IChangeTurnAction {

@@ -1,15 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  _boardAddTokenActionCreator,
-  _boardRemoveTokenActionCreator
-} from '../redux/actions/boardActions';
-import {
-  GetGameHistory,
-  GetGameHistoryLength,
-  GetRemovedHistory,
-  GetRemovedHistoryLength
-} from '../StoreGameMoves';
+import { _boardAddTokenActionCreator, _boardRemoveTokenActionCreator } from '../redux/actions/boardActions';
+import { GetGameHistory, GetGameHistoryLength, GetRemovedHistory, GetRemovedHistoryLength } from '../StoreGameMoves';
 
 function BackForButton() {
   const dispatch = useDispatch();
@@ -17,9 +9,7 @@ function BackForButton() {
   function GoBack() {
     if (GetGameHistoryLength() > 0) {
       let previousMove = GetGameHistory();
-      dispatch(
-        _boardRemoveTokenActionCreator({ columnNum: previousMove.columnNum })
-      );
+      dispatch(_boardRemoveTokenActionCreator({ columnNum: previousMove.columnNum }));
     }
   }
 
