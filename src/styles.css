@@ -2,7 +2,7 @@
   background-color: rgb(34, 34, 34);
 }
 :root {
-  --tokenSize: min(84px, 10vw, 10vh);
+  --tokenSize: min(84px, 13vw, 11vh);
 }
 h1 {
   color: aliceblue;
@@ -13,11 +13,12 @@ h1 {
   width: fit-content;
   display: flex;
   flex-direction: row;
+  padding-top: var(--tokenSize);
 }
 .column {
   position: relative;
   width: var(--tokenSize);
-  height: calc(var(--tokenSize) * 7);
+  height: calc(var(--tokenSize) * 6);
 }
 .column:hover {
   cursor: pointer;
@@ -35,21 +36,40 @@ h1 {
 }
 
 .token {
+  margin-top: calc(var(--tokenSize) * 1);
+  margin-bottom: calc(var(--tokenSize) * 1);
+  background-color: transparent;
   position: absolute;
-  right: 0px;
-  width: var(--tokenSize);
-  height: var(--tokenSize);
+  top: calc(var(--tokenSize) * -1);
   border-radius: 50%;
 }
 
 .tokenPlayer1 {
-  position: absolute;
+  width: var(--tokenSize);
+  height: var(--tokenSize);
+  margin: 0;
   background-color: yellow;
-  z-index: 5;
+  animation: tokenDrop calc(calc((var(--custom) / (var(--custom) + 6) * 1.5s))) ease-in 0.1s 1 normal forwards;
 }
 
 .tokenPlayer2 {
-  position: absolute;
+  width: var(--tokenSize);
+  height: var(--tokenSize);
+  margin: 0;
   background-color: red;
-  z-index: 5;
+  animation: tokenDrop calc(calc((var(--custom) / (var(--custom) + 6) * 1.5s))) ease-in 0.1s 1 normal forwards;
+}
+
+.tokenWin {
+  border: 12px solid black;
+}
+
+@keyframes tokenDrop {
+  to {
+    transform: translateY(calc(var(--custom) * var(--tokenSize)));
+  }
+}
+
+.button {
+  width: min(30%, 125px);
 }

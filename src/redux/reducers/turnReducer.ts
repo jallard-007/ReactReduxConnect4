@@ -1,14 +1,20 @@
 import { IChangeTurnAction } from '../actions/boardActions';
 
-export default function turnReducer(state = { turn: 'player' }, action: IChangeTurnAction) {
-  switch (state.turn) {
-    case 'player':
+const initialState = {
+  whosTurn: 'player'
+};
+
+export default function turnReducer(state = initialState, action: IChangeTurnAction) {
+  switch (action.type) {
+    case 'CHANGE_TURN_TO_PLAYER1':
       return {
-        turn: 'comp'
+        whosTurn: 'player1'
       };
-    case 'comp':
+    case 'CHANGE_TURN_TO_PLAYER2':
       return {
-        turn: 'player'
+        whosTurn: 'player2'
       };
+    default:
+      return state;
   }
 }

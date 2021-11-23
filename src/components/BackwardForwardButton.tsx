@@ -1,19 +1,24 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { _boardAddTokenActionCreator, _boardRemoveTokenActionCreator } from '../redux/actions/boardActions';
-import { GetGameHistory, GetGameHistoryLength, GetRemovedHistory, GetRemovedHistoryLength } from '../StoreGameMoves';
+import {
+  GetGameHistory,
+  GetGameHistoryLength,
+  GetRemovedHistory,
+  GetRemovedHistoryLength
+} from '../boardLogic/StoreGameMoves';
 
 function BackForButton() {
   const dispatch = useDispatch();
 
-  function GoBack() {
+  function goBack() {
     if (GetGameHistoryLength() > 0) {
       let previousMove = GetGameHistory();
       dispatch(_boardRemoveTokenActionCreator({ columnNum: previousMove.columnNum }));
     }
   }
 
-  function GoForward() {
+  function goForward() {
     if (GetRemovedHistoryLength() > 0) {
       let removedMove = GetRemovedHistory();
       dispatch(
@@ -25,11 +30,11 @@ function BackForButton() {
     }
   }
   return (
-    <div>
-      <button className='btn btn-info' onClick={() => GoBack()}>
+    <div className='text-center'>
+      <button type='button' className='btn btn-info button' onClick={() => goBack()}>
         GoBack
       </button>
-      <button className='btn btn-info' onClick={() => GoForward()}>
+      <button type='button' className='btn btn-info button' onClick={() => goForward()}>
         GoForward
       </button>
     </div>

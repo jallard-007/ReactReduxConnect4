@@ -11,10 +11,10 @@ function App() {
         <header>
           <h1 className='text-center'>ConnectFour</h1>
         </header>
-        <ResetButton />
         <BackForButton />
-        <Board />
+        <ResetButton />
       </div>
+      <Board />
     </div>
   );
 }

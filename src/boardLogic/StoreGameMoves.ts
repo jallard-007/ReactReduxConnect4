@@ -1,4 +1,4 @@
-import { IBoardAddTokenActionPayload } from './redux/actions/boardActions';
+import { IBoardAddTokenActionPayload } from '../redux/actions/boardActions';
 
 let gameHistory: IBoardAddTokenActionPayload[] = [];
 let gameHistoryRemoved: IBoardAddTokenActionPayload[] = [];
@@ -12,7 +12,6 @@ export function SetGameHistory(move: IBoardAddTokenActionPayload, branch: boolea
     gameHistoryRemoved = [];
     gameHistoryRemovedLength = 0;
   }
-  console.log(move);
   let thisMove = {} as IBoardAddTokenActionPayload;
   thisMove.columnNum = move.columnNum;
   thisMove.playerID = move.playerID;
@@ -41,7 +40,7 @@ export function GetRemovedHistory() {
   return move;
 }
 
-export function NewGameMoves() {
+export function ClearGameHistory() {
   gameHistory = [];
   gameHistoryRemoved = [];
   gameHistoryLength = 0;

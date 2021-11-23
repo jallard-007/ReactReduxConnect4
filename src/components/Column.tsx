@@ -1,61 +1,111 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CPU from '../BoardLogic/CPUMain';
-import { _boardAddTokenActionCreator } from '../redux/actions/boardActions';
+import checkForWin, { WinningToken } from '../boardLogic/CheckForWin';
+import CPU from '../boardLogic/CPUMain';
+import {
+  _boardAddTokenActionCreator,
+  _boardAddTokenWinActionCreator,
+  _changeTurnActionCreator
+} from '../redux/actions/boardActions';
+import store from '../redux/store';
 import Occupant from '../redux/types/EOccupant';
 import IAppState from '../redux/types/IAppState';
-import { SetGameHistory } from '../StoreGameMoves';
+import { SetGameHistory } from '../boardLogic/StoreGameMoves';
 import Slot from './Slot';
 import Token from './Token';
 
 const root = document.documentElement;
-let playerTurn = true;
 function Column(props: { columnNum: number }) {
+  const [hover, setHover] = useState(false);
   let board = useSelector((state: IAppState) => state.board);
   const dispatch = useDispatch();
 
   function onMouseEnter() {
-    root.style.setProperty('--value', board.columns[props.columnNum].slotsAvailable + '');
+    setHover(true);
+    root.style.setProperty('--tokenDropAmount', board.columns[props.columnNum].slotsAvailable + '');
+  }
+  function onMouseLeave() {
+    setHover(false);
+  }
+
+  function isWin(playerID: Occupant) {
+    board = store.getState().board;
+    const isThereAWin: WinningToken[] | boolean = checkForWin(board, playerID, true);
+    if (typeof isThereAWin === 'object') {
+      showWin(isThereAWin);
+      console.log(playerID + ' won');
+      return true;
+    }
+    return false;
+  }
+
+  function showWin(WinningTokens: WinningToken[]) {
+    for (let i = 0; i < 4; i++) {
+      dispatch(
+        _boardAddTokenWinActionCreator({
+          columnNum: WinningTokens[i].columnNum,
+          slotNum: WinningTokens[i].slotNum,
+          whoWon: WinningTokens[i].whoWon
+        })
+      );
+    }
+  }
+
+  function addTokenAndSetHistory(columnNum: number, playerID: Occupant) {
+    dispatch(
+      _boardAddTokenActionCreator({
+        columnNum: columnNum,
+        playerID: playerID
+      })
+    );
+    SetGameHistory({ columnNum: columnNum, playerID: playerID }, true);
   }
 
   function handleClick() {
-    if (!playerTurn) {
+    if (store.getState().turn.whosTurn === 'player2') {
       return;
     }
-    playerTurn = false;
-    dispatch(
-      _boardAddTokenActionCreator({
-        columnNum: props.columnNum,
-        playerID: Occupant.Player1
-      })
-    );
-    SetGameHistory({ columnNum: props.columnNum, playerID: Occupant.Player1 }, true);
+    addTokenAndSetHistory(props.columnNum, Occupant.Player1);
+    setHover(false);
+    if (isWin(Occupant.Player1)) {
+      return;
+    }
+    dispatch(_changeTurnActionCreator('player2'));
     setTimeout(() => {
+      const turn = store.getState().turn.whosTurn;
+      if (turn === 'player1') {
+        return;
+      }
+
+      board = store.getState().board;
       const compColumn = CPU(board);
-      dispatch(
-        _boardAddTokenActionCreator({
-          columnNum: compColumn,
-          playerID: Occupant.Player2
-        })
-      );
-      SetGameHistory({ columnNum: compColumn, playerID: Occupant.Player2 }, true);
-      playerTurn = true;
-    }, Math.random() * 2000);
+      addTokenAndSetHistory(compColumn, Occupant.Player2);
+      if (isWin(Occupant.Player2)) {
+        return;
+      }
+      dispatch(_changeTurnActionCreator('player1'));
+    }, 750);
   }
+  const columnProperties = board.columns[props.columnNum];
+  const columnNumMap: number[] = [0, 1, 2, 3, 4, 5];
   return (
-    <div className='column' onClick={() => handleClick()} onMouseEnter={() => onMouseEnter()}>
-      <Token slotsNum={1} occupant={board.columns[props.columnNum].slots[0].occupant} />
-      <Token slotsNum={2} occupant={board.columns[props.columnNum].slots[1].occupant} />
-      <Token slotsNum={3} occupant={board.columns[props.columnNum].slots[2].occupant} />
-      <Token slotsNum={4} occupant={board.columns[props.columnNum].slots[3].occupant} />
-      <Token slotsNum={5} occupant={board.columns[props.columnNum].slots[4].occupant} />
-      <Token slotsNum={6} occupant={board.columns[props.columnNum].slots[5].occupant} />
-      <Slot slotsNum={1} />
-      <Slot slotsNum={2} />
-      <Slot slotsNum={3} />
-      <Slot slotsNum={4} />
-      <Slot slotsNum={5} />
-      <Slot slotsNum={6} />
+    <div
+      className='column'
+      onClick={() => handleClick()}
+      onMouseEnter={() => onMouseEnter()}
+      onMouseLeave={() => onMouseLeave()}
+    >
+      {columnNumMap.map((slotNum) => (
+        <Token
+          key={slotNum + ', ' + props.columnNum}
+          positionInColumn={slotNum}
+          slotsNum={slotNum + 1}
+          occupant={columnProperties.slots[slotNum].occupant}
+        />
+      ))}
+      {columnNumMap.map((slotNum) => (
+        <Slot slotsNum={slotNum} hover={hover} nextSlotUp={columnProperties.slotsAvailable} />
+      ))}
     </div>
   );
 }

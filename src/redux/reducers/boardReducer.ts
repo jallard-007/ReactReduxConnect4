@@ -1,5 +1,6 @@
 import BoardActions, {
   BOARD_ADD_TOKEN,
+  BOARD_ADD_TOKEN_WIN,
   BOARD_CLEAR,
   BOARD_REMOVE_TOKEN
 } from '../actions/boardActions';
@@ -16,47 +17,38 @@ const emptyColumn: IColumn = {
   slotsAvailable: 6
 };
 const initialState: IBoard = {
-  columns: [
-    emptyColumn,
-    emptyColumn,
-    emptyColumn,
-    emptyColumn,
-    emptyColumn,
-    emptyColumn,
-    emptyColumn
-  ]
+  columns: [emptyColumn, emptyColumn, emptyColumn, emptyColumn, emptyColumn, emptyColumn, emptyColumn]
 };
 
 let columnNum: number;
 let slotsAvailable: number;
 
-export default function boardReducer(
-  state = initialState,
-  action: BoardActions
-) {
+export default function boardReducer(state = initialState, action: BoardActions) {
   const newBoard = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case BOARD_ADD_TOKEN:
       columnNum = action.payload.columnNum;
       slotsAvailable = newBoard.columns[columnNum].slotsAvailable;
-      if (slotsAvailable < 1) {
-        return state;
-      }
-      newBoard.columns[columnNum].slots[slotsAvailable - 1].occupant =
-        action.payload.playerID;
+      if (slotsAvailable < 1) return state;
+      newBoard.columns[columnNum].slots[slotsAvailable - 1].occupant = action.payload.playerID;
       newBoard.columns[columnNum].slotsAvailable = slotsAvailable - 1;
       return newBoard;
+
+    case BOARD_ADD_TOKEN_WIN:
+      let whoWon = action.payload.whoWon;
+      if (whoWon === Occupant.Player1) whoWon = Occupant.Player1Win;
+      else whoWon = Occupant.Player2Win;
+      newBoard.columns[action.payload.columnNum].slots[action.payload.slotNum].occupant = whoWon;
+      return newBoard;
+
     case BOARD_REMOVE_TOKEN:
       columnNum = action.payload.columnNum;
-      console.log(newBoard.columns[columnNum]);
       slotsAvailable = newBoard.columns[columnNum].slotsAvailable;
-      if (slotsAvailable > 5) {
-        return state;
-      }
-      newBoard.columns[columnNum].slots[slotsAvailable].occupant =
-        Occupant.Empty;
+      if (slotsAvailable > 5) return state;
+      newBoard.columns[columnNum].slots[slotsAvailable].occupant = Occupant.Empty;
       newBoard.columns[columnNum].slotsAvailable = slotsAvailable + 1;
       return newBoard;
+
     case BOARD_CLEAR:
       const clearBoard = initialState;
       return clearBoard;

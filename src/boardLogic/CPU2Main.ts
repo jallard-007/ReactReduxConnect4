@@ -3,15 +3,15 @@ import IBoard from '../redux/types/IBoard';
 import IColumn from '../redux/types/IColumn';
 import checkForWin from './CheckForWin';
 
-function CPU(boardState: IBoard) {
+function CPU2(boardState: IBoard) {
   let board = JSON.parse(JSON.stringify(boardState));
   let valueOfColumns = [0, 0, 0, 0, 0, 0, 0];
   for (let columnNum = board.columns.length - 1; columnNum >= 0; columnNum--) {
     if (columnIsFull(board.columns[columnNum])) {
       valueOfColumns[columnNum] = -100;
-    } else if (isWinHere(board, columnNum, Occupant.Player2)) {
-      valueOfColumns[columnNum] = 100;
     } else if (isWinHere(board, columnNum, Occupant.Player1)) {
+      valueOfColumns[columnNum] = 100;
+    } else if (isWinHere(board, columnNum, Occupant.Player2)) {
       valueOfColumns[columnNum] = 99;
     }
   }
@@ -57,4 +57,4 @@ function isWinHere(board: IBoard, columnNum: number, ID: Occupant) {
   board.columns[columnNum].slots[slotNum - 1].occupant = 0;
   return false;
 }
-export default CPU;
+export default CPU2;
