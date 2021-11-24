@@ -60,25 +60,4 @@ export function _boardClearActionCreator(): IBoardClearAction {
 
 type BoardActions = IBoardAddTokenAction | IBoardRemoveTokenAction | IBoardClearAction | IBoardAddTokenWinAction;
 
-export const CHANGE_TURN_TO_PLAYER1 = 'CHANGE_TURN_TO_PLAYER1';
-export const CHANGE_TURN_TO_PLAYER2 = 'CHANGE_TURN_TO_PLAYER2';
-export interface IChangeTurnAction {
-  type: typeof CHANGE_TURN_TO_PLAYER1 | typeof CHANGE_TURN_TO_PLAYER2 | null;
-}
-export function _changeTurnActionCreator(action: string): IChangeTurnAction {
-  if (action === 'player1') {
-    return {
-      type: CHANGE_TURN_TO_PLAYER1
-    };
-  }
-  if (action === 'player2') {
-    return {
-      type: CHANGE_TURN_TO_PLAYER2
-    };
-  }
-  return {
-    type: null
-  };
-}
-
 export default BoardActions;

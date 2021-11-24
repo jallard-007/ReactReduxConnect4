@@ -6,14 +6,12 @@ import BackForButton from './BackwardForwardButton';
 
 function App() {
   return (
-    <div className='container'>
-      <div className='App'>
-        <header>
-          <h1 className='text-center'>ConnectFour</h1>
-        </header>
-        <BackForButton />
-        <ResetButton />
-      </div>
+    <div>
+      <header>
+        <h1 className='text-center'>ConnectFour</h1>
+      </header>
+      <BackForButton />
+      <ResetButton />
       <Board />
     </div>
   );

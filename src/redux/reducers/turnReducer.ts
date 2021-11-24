@@ -1,20 +1,10 @@
-import { IChangeTurnAction } from '../actions/boardActions';
+import { CHANGE_TURN, IChangeTurnAction } from '../actions/turnActions';
 
-const initialState = {
-  whosTurn: 'player'
-};
+const initialState = 'player1';
 
 export default function turnReducer(state = initialState, action: IChangeTurnAction) {
-  switch (action.type) {
-    case 'CHANGE_TURN_TO_PLAYER1':
-      return {
-        whosTurn: 'player1'
-      };
-    case 'CHANGE_TURN_TO_PLAYER2':
-      return {
-        whosTurn: 'player2'
-      };
-    default:
-      return state;
+  if (action.type === CHANGE_TURN) {
+    return action.payload.whosTurn;
   }
+  return state;
 }

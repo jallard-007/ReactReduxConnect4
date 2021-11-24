@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import checkForWin, { WinningToken } from '../boardLogic/CheckForWin';
 import CPU from '../boardLogic/CPUMain';
-import {
-  _boardAddTokenActionCreator,
-  _boardAddTokenWinActionCreator,
-  _changeTurnActionCreator
-} from '../redux/actions/boardActions';
+import { _boardAddTokenActionCreator, _boardAddTokenWinActionCreator } from '../redux/actions/boardActions';
+import _changeTurnActionCreator from '../redux/actions/turnActions';
 import store from '../redux/store';
 import Occupant from '../redux/types/EOccupant';
 import IAppState from '../redux/types/IAppState';
 import { SetGameHistory } from '../boardLogic/StoreGameMoves';
 import Slot from './Slot';
 import Token from './Token';
+import { _columnChangeNumActionCreator } from '../redux/actions/columnNumActions';
 
 const root = document.documentElement;
 function Column(props: { columnNum: number }) {
-  const [hover, setHover] = useState(false);
   let board = useSelector((state: IAppState) => state.board);
   const dispatch = useDispatch();
 
   function onMouseEnter() {
-    setHover(true);
-    root.style.setProperty('--tokenDropAmount', board.columns[props.columnNum].slotsAvailable + '');
+    dispatch(_columnChangeNumActionCreator({ currColumnNum: props.columnNum }));
   }
   function onMouseLeave() {
-    setHover(false);
+    dispatch(_columnChangeNumActionCreator({ currColumnNum: null }));
   }
 
   function isWin(playerID: Occupant) {
@@ -33,12 +29,12 @@ function Column(props: { columnNum: number }) {
     const isThereAWin: WinningToken[] | boolean = checkForWin(board, playerID, true);
     if (typeof isThereAWin === 'object') {
       showWin(isThereAWin);
-      console.log(playerID + ' won');
+      dispatch(_changeTurnActionCreator({ whosTurn: 'neither' }));
+      console.log('player' + playerID + ' won');
       return true;
     }
     return false;
   }
-
   function showWin(WinningTokens: WinningToken[]) {
     for (let i = 0; i < 4; i++) {
       dispatch(
@@ -62,18 +58,19 @@ function Column(props: { columnNum: number }) {
   }
 
   function handleClick() {
-    if (store.getState().turn.whosTurn === 'player2') {
+    if (store.getState().whosTurn !== 'player1') {
       return;
     }
+    root.style.setProperty('--tokenDropAmount', board.columns[props.columnNum].slotsAvailable + '');
     addTokenAndSetHistory(props.columnNum, Occupant.Player1);
-    setHover(false);
     if (isWin(Occupant.Player1)) {
       return;
     }
-    dispatch(_changeTurnActionCreator('player2'));
+    dispatch(_changeTurnActionCreator({ whosTurn: 'player2' }));
     setTimeout(() => {
-      const turn = store.getState().turn.whosTurn;
-      if (turn === 'player1') {
+      const turn = store.getState().whosTurn;
+      console.log(turn);
+      if (turn !== 'player2') {
         return;
       }
 
@@ -83,11 +80,13 @@ function Column(props: { columnNum: number }) {
       if (isWin(Occupant.Player2)) {
         return;
       }
-      dispatch(_changeTurnActionCreator('player1'));
+      dispatch(_changeTurnActionCreator({ whosTurn: 'player1' }));
+      dispatch(_columnChangeNumActionCreator({ currColumnNum: 'current' }));
     }, 750);
   }
   const columnProperties = board.columns[props.columnNum];
   const columnNumMap: number[] = [0, 1, 2, 3, 4, 5];
+
   return (
     <div
       className='column'
@@ -104,7 +103,12 @@ function Column(props: { columnNum: number }) {
         />
       ))}
       {columnNumMap.map((slotNum) => (
-        <Slot slotsNum={slotNum} hover={hover} nextSlotUp={columnProperties.slotsAvailable} />
+        <Slot
+          key={slotNum}
+          slotsNum={slotNum}
+          columnNum={props.columnNum}
+          nextSlotUp={columnProperties.slotsAvailable}
+        />
       ))}
     </div>
   );
