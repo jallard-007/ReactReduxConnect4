@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import checkForWin, { WinningToken } from '../boardLogic/CheckForWin';
-import CPU from '../boardLogic/CPUMain';
 import { _boardAddTokenActionCreator, _boardAddTokenWinActionCreator } from '../redux/actions/boardActions';
 import _changeTurnActionCreator from '../redux/actions/turnActions';
 import store from '../redux/store';
 import Occupant from '../redux/types/EOccupant';
 import IAppState from '../redux/types/IAppState';
-import { SetGameHistory } from '../boardLogic/StoreGameMoves';
 import Slot from './Slot';
 import Token from './Token';
 import { _columnChangeNumActionCreator } from '../redux/actions/columnNumActions';
+import { SetGameHistory } from '../boardLogic/gameHistory';
+import CPU from '../boardLogic/cpu';
+import checkForWin, { WinningToken } from '../boardLogic/checkForWin';
 
 const root = document.documentElement;
 function Column(props: { columnNum: number }) {
@@ -75,7 +75,7 @@ function Column(props: { columnNum: number }) {
       }
 
       board = store.getState().board;
-      const compColumn = CPU(board);
+      const compColumn = CPU(board, Occupant.Player2);
       addTokenAndSetHistory(compColumn, Occupant.Player2);
       if (isWin(Occupant.Player2)) {
         return;

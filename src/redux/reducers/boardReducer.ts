@@ -1,3 +1,4 @@
+import { SetRemovedHistory } from '../../boardLogic/gameHistory';
 import BoardActions, {
   BOARD_ADD_TOKEN,
   BOARD_ADD_TOKEN_WIN,
@@ -45,6 +46,7 @@ export default function boardReducer(state = initialState, action: BoardActions)
       columnNum = action.payload.columnNum;
       slotsAvailable = newBoard.columns[columnNum].slotsAvailable;
       if (slotsAvailable > 5) return state;
+      SetRemovedHistory({ columnNum: columnNum, playerID: newBoard.columns[columnNum].slots[slotsAvailable].occupant });
       newBoard.columns[columnNum].slots[slotsAvailable].occupant = Occupant.Empty;
       newBoard.columns[columnNum].slotsAvailable = slotsAvailable + 1;
       return newBoard;

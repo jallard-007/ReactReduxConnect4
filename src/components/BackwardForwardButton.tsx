@@ -6,7 +6,7 @@ import {
   GetGameHistoryLength,
   GetRemovedHistory,
   GetRemovedHistoryLength
-} from '../boardLogic/StoreGameMoves';
+} from '../boardLogic/gameHistory';
 
 function BackForButton() {
   const dispatch = useDispatch();
