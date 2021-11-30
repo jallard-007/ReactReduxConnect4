@@ -28,7 +28,6 @@ export function GetRemovedHistoryLength() {
   return gameHistoryRemovedLength;
 }
 export function SetRemovedHistory(move: IBoardAddTokenActionPayload) {
-  console.log(move);
   gameHistoryRemoved.push(move);
   gameHistoryRemovedLength++;
 }

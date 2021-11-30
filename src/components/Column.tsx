@@ -69,7 +69,6 @@ function Column(props: { columnNum: number }) {
     dispatch(_changeTurnActionCreator({ whosTurn: 'player2' }));
     setTimeout(() => {
       const turn = store.getState().whosTurn;
-      console.log(turn);
       if (turn !== 'player2') {
         return;
       }
