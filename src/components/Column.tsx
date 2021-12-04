@@ -11,6 +11,7 @@ import { _columnChangeNumActionCreator } from '../redux/actions/columnNumActions
 import { SetGameHistory } from '../boardLogic/gameHistory';
 import CPU from '../boardLogic/cpu';
 import checkForWin, { WinningToken } from '../boardLogic/checkForWin';
+import _changeScoreActionCreator from '../redux/actions/scoreActions';
 
 const root = document.documentElement;
 function Column(props: { columnNum: number }) {
@@ -29,6 +30,7 @@ function Column(props: { columnNum: number }) {
     const isThereAWin: WinningToken[] | boolean = checkForWin(board, playerID, true);
     if (typeof isThereAWin === 'object') {
       showWin(isThereAWin);
+      dispatch(_changeScoreActionCreator({ whoWon: playerID }));
       dispatch(_changeTurnActionCreator({ whosTurn: 'neither' }));
       console.log('player' + playerID + ' won');
       return true;

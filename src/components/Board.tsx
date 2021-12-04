@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import Column from './Column';
+import gameboard from '../gameboard.png';
 
 export default function Board() {
   return (
@@ -11,6 +13,7 @@ export default function Board() {
       <Column columnNum={4} />
       <Column columnNum={5} />
       <Column columnNum={6} />
+      <img id='gameboardImage' src={gameboard} />
     </div>
   );
 }

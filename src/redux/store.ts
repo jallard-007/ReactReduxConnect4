@@ -4,11 +4,13 @@ import turnReducer from './reducers/turnReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import currColumnNumReducer from './reducers/columnNumReducer';
+import scoreReducer from './reducers/scoreReducer';
 
 const reducers = combineReducers({
   board: boardReducer,
   whosTurn: turnReducer,
-  currColumnNum: currColumnNumReducer
+  currColumnNum: currColumnNumReducer,
+  score: scoreReducer
 });
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));

@@ -6,32 +6,52 @@
 }
 h1 {
   color: aliceblue;
+  background-color: rgb(139, 139, 139);
 }
+
+#scoreboard {
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  background-color: black;
+  color: rgb(139, 139, 139);
+}
+
 #gameBoard {
+  justify-content: center;
+  position: relative;
   border-radius: 10px;
   margin: auto;
   width: fit-content;
   display: flex;
   flex-direction: row;
   padding-top: var(--tokenSize);
+  background-color: transparent;
+}
+#gameboardImage {
+  position: absolute;
+  top: calc(var(--tokenSize) * 0.87);
+  background-color: transparent;
+  width: calc(var(--tokenSize) * 7.84);
 }
 .column {
   position: relative;
+  margin: calc(var(--tokenSize) * 0.0357);
   width: var(--tokenSize);
   height: calc(var(--tokenSize) * 6);
+  background-color: transparent;
 }
+
 .column:hover {
   cursor: pointer;
 }
 
 .slot {
   position: absolute;
-  right: 0px;
-  border: 2px solid blue;
-  width: var(--tokenSize);
-  height: var(--tokenSize);
+  width: calc(var(--tokenSize) * 1.01);
+  height: calc(var(--tokenSize) * 1.01);
   border-radius: 50%;
-  z-index: 10;
+  z-index: 5;
   background-color: transparent;
 }
 
