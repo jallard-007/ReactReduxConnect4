@@ -1,6 +1,7 @@
 import { CHANGE_TURN, IChangeTurnAction } from '../actions/turnActions';
+import Occupant from '../types/EOccupant';
 
-const initialState = 'player1';
+const initialState = Occupant.Player1;
 
 export default function turnReducer(state = initialState, action: IChangeTurnAction) {
   if (action.type === CHANGE_TURN) {

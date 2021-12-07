@@ -3,7 +3,8 @@ enum Occupant {
   Player1,
   Player2,
   Player1Win,
-  Player2Win
+  Player2Win,
+  Flip
 }
 
 export default Occupant;

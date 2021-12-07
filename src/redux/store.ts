@@ -5,14 +5,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import currColumnNumReducer from './reducers/columnNumReducer';
 import scoreReducer from './reducers/scoreReducer';
+import playerIDReducer from './reducers/playerIDReducer';
 
 const reducers = combineReducers({
   board: boardReducer,
   whosTurn: turnReducer,
   currColumnNum: currColumnNumReducer,
-  score: scoreReducer
+  score: scoreReducer,
+  playerID: playerIDReducer
 });
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
+let store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;
